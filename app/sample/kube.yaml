@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-sample
+  labels:
+    app: fastapi-sample
+    service: fast
+spec:
+  ports:
+  - port: 5000
+    targetPort: 8000
+    name: http
+  selector:
+    app: fastapi-sample
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-sample
+  labels:
+    app: fastapi-sample
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-sample
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: fastapi-sample
+        version: v1
+    spec:
+      containers:
+      - name: fastapi-sample
+        image: docker.io/tyao117/fast-api-sample-v1
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent #Always
+        ports:
+        - containerPort: 8000
