@@ -1,6 +1,7 @@
 from typing import Optional
 
 from fastapi import FastAPI
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 
 import httpx
@@ -24,7 +25,8 @@ async def read_item(item_id: int, q: Optional[str] = None):
 
 @app.post("/task")
 async def send_task(payload: Item):
-    r = httpx.post("http://fastapi-task/new_task", data=payload)
+    payload = jsonable_encoder(payload)
+    r = httpx.post("http://fastapi-task/new_task", json=payload)
     return r
 
 
