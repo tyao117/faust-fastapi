@@ -2,10 +2,10 @@
 FROM python:3.8-slim-buster
 
 WORKDIR /opt/microservices
-COPY main.py /opt/microservices/
 COPY requirements.txt /opt/microservices/
-
 RUN pip install -r /opt/microservices/requirements.txt
+
+COPY main.py /opt/microservices/
 
 EXPOSE 8000
 

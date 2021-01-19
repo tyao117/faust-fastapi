@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-task
+  labels:
+    app: fastapi-task
+    service: fast
+spec:
+  ports:
+  - port: 5000
+    targetPort: 8000
+    name: http
+  selector:
+    app: fastapi-task
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-task
+  labels:
+    app: fastapi-task
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-task
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: fastapi-task
+        version: v1
+    spec:
+      containers:
+      - name: fastapi-task
+        image: docker.io/tyao117/fast-api-tasks-v1
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent #Always
+        ports:
+        - containerPort: 8000
