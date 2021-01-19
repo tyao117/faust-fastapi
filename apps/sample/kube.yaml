@@ -7,9 +7,10 @@ metadata:
     service: fast
 spec:
   ports:
-  - port: 80
-    targetPort: 8000
-    name: http
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
   selector:
     app: fastapi-sample
 ---
@@ -32,12 +33,14 @@ spec:
         app: fastapi-sample
         version: v1
     spec:
-      containers:
-      - name: fastapi-sample
-        image: docker.io/tyao117/fast-api-sample-v1
-        resources:
-          requests:
-            cpu: "100m"
-        imagePullPolicy: IfNotPresent #Always
-        ports:
-        - containerPort: 8000
+        containers:
+          - name: fastapi-sample
+            image: docker.io/tyao117/fast-api-sample-v1
+            resources:
+              requests:
+                cpu: "100m"
+            imagePullPolicy: IfNotPresent #Always
+            ports:
+            - containerPort: 8000
+              protocol: TCP
+              name: http

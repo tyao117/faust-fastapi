@@ -1,4 +1,7 @@
 # istio-faust-fastapi
 
 ## TODOs:
-* Work on the integration between services
+
+- Implement the faust part
+- Implement the apache part
+- Documentation

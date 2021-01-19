@@ -15,4 +15,4 @@ ENV SERVICE_VERSION ${service_version:-v1}
 WORKDIR /opt/microservices
 
 # working version
-CMD ["uvicorn", "main:app", "--reload"]
+CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0"]
